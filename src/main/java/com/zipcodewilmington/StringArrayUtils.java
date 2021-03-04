@@ -76,20 +76,20 @@ public class StringArrayUtils {
      * @return true if the order of the array is the same backwards and forwards
      */ // TODO
     public static boolean isPalindromic(String[] array) {
-        ArrayList<String> stringArrList = new ArrayList<String>();
+        boolean isPalin = false;
+        String[] reverseArr = new String [array.length];
+        int j = array.length;
 
-        for(int i= array.length-1;i>=0;i--){
-            stringArrList.add(array[i]);
+        for(int i=0;i< array.length;i++){
+            reverseArr[j-1] = array[i];
+            j--;
+            if(array[i]==reverseArr[i]){
+                isPalin = true;
+            }
         }
 
-        String[] reverseString = stringArrList.toArray(new String[stringArrList.size()]);
+        return isPalin;
 
-        if(reverseString.equals(array)){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     /**
@@ -97,8 +97,28 @@ public class StringArrayUtils {
      * @return true if each letter in the alphabet has been used in the array
      */ // TODO
     public static boolean isPangramic(String[] array) {
+        boolean isPan = false;
+        String concatString = "";
 
-        return false;
+        for(int i=0;i<array.length;i++){
+            concatString = concatString.concat(array[i]);
+        }
+
+        concatString = concatString.toLowerCase();
+
+
+        for(char i='a';i<='z';i++){
+            for(int j=0;j<concatString.length();j++){
+                if(concatString.charAt(j)==i){
+                    isPan = true;
+                }
+            }
+            if(isPan==false){
+                return false;
+            }
+            isPan = false;
+        }
+        return true;
     }
 
     /**
@@ -107,7 +127,15 @@ public class StringArrayUtils {
      * @return number of occurrences the specified `value` has occurred
      */ // TODO
     public static int getNumberOfOccurrences(String[] array, String value) {
-        return 1;
+        int count = 0;
+
+        for(int i=0;i<array.length;i++){
+            if(array[i]==value){
+                count++;
+            }
+        }
+
+        return count;
     }
 
     /**
@@ -140,7 +168,10 @@ public class StringArrayUtils {
                 stringArrList.add(array[i]);
             }
         }
-        String[] returnString = stringArrList.toArray(new String[stringArrList.size()]);
+        stringArrList.add(array[array.length-1]);
+
+        String[] returnString = new String[stringArrList.size()];
+        returnString = stringArrList.toArray(returnString);
         return returnString;
     }
 
@@ -149,8 +180,25 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
+        ArrayList<String> myList = new ArrayList<String>();
+        String holder = "";
+        int count = 0;
+        int countPlusOne = count + 1;
 
-        return null;
+        while(count < array.length){
+            holder = holder.concat(array[count]);
+            while(countPlusOne < array.length && array[count].equals(array[countPlusOne])){
+                holder = holder.concat(array[countPlusOne]);
+                countPlusOne++;
+            }
+            myList.add(holder);
+            holder = "";
+            count = countPlusOne;
+            countPlusOne++;
+        }
+
+        String[] returnStringArr = myList.toArray(new String[0]);
+        return returnStringArr;
     }
 
 
